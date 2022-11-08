@@ -52,27 +52,20 @@ const BrokersList: React.FC = () => {
         header: 'Broker ID',
         accessorKey: 'brokerId',
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ getValue }) => (
-          <LinkCell
-            value={`${getValue<string | number>()}`}
-            to={encodeURIComponent(`${getValue<string | number>()}`)}
-          />
+        cell: ({ row: { id }, getValue }) => (
+          <S.RowCell>
+            <LinkCell
+              value={`${getValue<string | number>()}`}
+              to={encodeURIComponent(`${getValue<string | number>()}`)}
+            />
+            {id === String(activeControllers) && <StarIcon />}
+          </S.RowCell>
         ),
       },
       { header: 'Segment Size', accessorKey: 'size', cell: SizeCell },
       { header: 'Segment Count', accessorKey: 'count' },
       { header: 'Port', accessorKey: 'port' },
-      {
-        header: 'Host',
-        accessorKey: 'host',
-        // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ row: { id }, getValue }) => (
-          <S.RowCell>
-            {id === String(activeControllers) && <StarIcon />}
-            {getValue<string | number>()}
-          </S.RowCell>
-        ),
-      },
+      { header: 'Host', accessorKey: 'host' },
     ],
     []
   );
@@ -88,9 +81,6 @@ const BrokersList: React.FC = () => {
         <Metrics.Section title="Uptime">
           <Metrics.Indicator label="Broker Count">
             {brokerCount}
-          </Metrics.Indicator>
-          <Metrics.Indicator label="Active Controller">
-            {activeControllers || 'Not known'}
           </Metrics.Indicator>
           <Metrics.Indicator label="Version">{version}</Metrics.Indicator>
         </Metrics.Section>

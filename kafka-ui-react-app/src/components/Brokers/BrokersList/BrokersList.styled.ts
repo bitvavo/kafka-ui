@@ -7,6 +7,6 @@ export const RowCell = styled.div`
 
   svg {
     width: 18px;
-    padding-right: 6px;
+    padding-left: 6px;
   }
 `;
